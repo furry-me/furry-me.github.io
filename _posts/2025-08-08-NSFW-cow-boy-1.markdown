@@ -4,7 +4,7 @@ title:      "误入牛兽人聚落-1-少年"
 subtitle:   ""
 date:       2025-08-08 00:00:00
 author:     "me"
-header-img: "img/my-paint/牛少年/00018.png"
+header-img: "img/my-paint/牛少年/bg.png"
 tags:
     - NSFW
     - 牛耳
