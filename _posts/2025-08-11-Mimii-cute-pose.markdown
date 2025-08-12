@@ -24,8 +24,8 @@ tags:
 用 [豆包](https://www.doubao.com/chat/) 生成了几个视频，动起来更可爱了
 
 ### 小猫凑凑
-<video src="/img/my-paint/咪咪/doubao-video-2.mp4" autoplay="false" controls="controls"></video>
+<video src="/img/my-paint/咪咪/doubao-video-2.mp4" autoplay="false" controls="controls" style="width: 90%; height: 90%;" ></video>
 
 ### 小猫摇摇
-<video src="/img/my-paint/咪咪/doubao-video-1.mp4" autoplay="false" controls="controls"></video>
+<video src="/img/my-paint/咪咪/doubao-video-1.mp4" autoplay="false" controls="controls" style="width: 90%; height: 90%;"></video>
 
