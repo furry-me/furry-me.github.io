@@ -3,7 +3,7 @@ layout:     post
 title:      "咪咪Mimii-可爱喵"
 subtitle:   ""
 date:       2025-08-11 00:00:00
-author:     "wiserxin"
+author:     "me"
 header-img: "img/my-paint/咪咪/3-meow.png"
 tags:
     - SFW

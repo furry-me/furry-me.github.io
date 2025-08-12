@@ -1,10 +1,10 @@
 # Site settings
 title: paint
-SEOTitle: wiserxin的画廊 | WSX Gallary
+SEOTitle: wsx的画廊 | WSX Gallary
 header-img: img/home-bg.jpg
-email: huxpro@gmail.com
-description: "这里是 @wiserxin 的绘画展示页，与你一起探索更好的世界 | 拥抱艺术, 拥抱AI"
-keyword: "wiserxin, wiserx, 个人网站, AI 绘画, 画图, furry, 二次元"
+email: furry_me@outlook.com
+description: "这里是 @wsx 的绘画展示页，与你一起探索更好的世界 | 拥抱艺术, 拥抱AI"
+keyword: "wsx, furry-me, 个人网站, AI 绘画, 画图, furry, 二次元"
 url: "https://paint.wiser.xin" # your host, for absolute URL
 baseurl: "" # for example, '/blog' if your blog hosted on 'host/blog'
 
