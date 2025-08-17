@@ -39,9 +39,9 @@ AI 绘画
 <summary>NSFW 作品，<b>点开前请确认已满18岁</b><br>
 ▶<b> <font color=darkred> 是的，坚持访问 </font> </b>
 </summary><p>
-    <img src="/img/my-paint/比大小/1-cat-dog.png"/>
-    <img src="/img/my-paint/比大小/2-dragon-lava.png"/>
-    <img src="/img/my-paint/比大小/3-cow-boy.png"/>
+    <img src="/img/my-paint/夜曦见闻/1-cat-dog.png"/>
+    <img src="/img/my-paint/夜曦见闻/2-dragon-lava.png"/>
+    <img src="/img/my-paint/夜曦见闻/3-cow-boy.png"/>
 </p></details>
 
 ## 故事集
