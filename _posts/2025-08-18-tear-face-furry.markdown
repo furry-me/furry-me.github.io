@@ -23,12 +23,12 @@ tags:
 ▶<b> <font color=darkred> 是的，坚持访问 </font> </b>
 </summary><p>
     <details>
-    <summary> ○ 普通
+    <summary> ○ <b>普通</b>
     </summary><p>
         <img src="/img/my-paint/哭哭脸/upscale.jpg"/>
     </p></details>
     <details>
-    <summary> ○ 透视差分
+    <summary> ○ <b>透视差分</b>
     </summary><p>
         <img src="/img/my-paint/哭哭脸/upscale-2.jpg"/>
     </p></details>
