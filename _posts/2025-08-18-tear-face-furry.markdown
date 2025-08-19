@@ -18,4 +18,10 @@ tags:
 用AI生成了初稿，然后手工改了改细节
 > 真的诱人吗？还是我画工调教的还不够？
 
-![哭哭脸](/img/my-paint/哭哭脸/upscale.jpg)
+<details>
+<summary>NSFW 作品，<b>点开前请确认已满18岁</b><br>
+▶<b> <font color=darkred> 是的，坚持访问 </font> </b>
+</summary><p>
+    <img src="/img/my-paint/哭哭脸/upscale.jpg"/>
+</p></details>
+
