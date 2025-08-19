@@ -22,6 +22,16 @@ tags:
 <summary>NSFW 作品，<b>点开前请确认已满18岁</b><br>
 ▶<b> <font color=darkred> 是的，坚持访问 </font> </b>
 </summary><p>
-    <img src="/img/my-paint/哭哭脸/upscale.jpg"/>
+    <details>
+    <summary> ○ 普通
+    </summary><p>
+        <img src="/img/my-paint/哭哭脸/upscale.jpg"/>
+    </p></details>
+    <details>
+    <summary> ○ 透视差分
+    </summary><p>
+        <img src="/img/my-paint/哭哭脸/upscale-2.jpg"/>
+    </p></details>
 </p></details>
+
 
