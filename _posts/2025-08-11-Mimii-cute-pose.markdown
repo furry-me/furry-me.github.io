@@ -23,6 +23,9 @@ tags:
 ## 视频
 用 [豆包](https://www.doubao.com/chat/) 生成了几个视频，动起来更可爱了
 
+### 先看一段超级好的混剪
+<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=115043903474542&bvid=BV1g3YCz6E5x&cid=31757763720&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
 ### 小猫凑凑
 > 帮我生成视频：衣服随风飘动，猫耳少年摇动尾巴，手部上下轻摇（类似招财猫的动作），脸部张嘴说喵。身子突然靠近
 <video src="/img/my-paint/咪咪/doubao-video-2.mp4" autoplay="false" controls="controls" style="width: 90%; height: 90%;" ></video>
