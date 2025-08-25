@@ -1,0 +1,27 @@
+---
+layout:     post
+title:      "一些帅帅狼人"
+subtitle:   ""
+date:       2025-08-23 00:00:00
+author:     "me"
+header-img: "img/my-paint/狼人/4-2.jpg"
+tags:
+    - SFW
+    - furry
+    - 狼人
+    - 披风
+    - 异世界
+---
+
+> 
+## 绘图
+AI生成
+
+![1](/img/my-paint/狼人/1.jpg)
+![2](/img/my-paint/狼人/2.jpg)
+![3](/img/my-paint/狼人/3.jpg)
+![4](/img/my-paint/狼人/4.jpg)
+
+## 视频
+
+<video src="/img/my-paint/狼人/3.mp4" autoplay="false" controls="controls" style="width: 90%; height: 90%;" ></video>
