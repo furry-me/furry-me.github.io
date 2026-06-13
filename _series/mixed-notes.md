@@ -6,7 +6,6 @@ author: "群星"
 header-img: "img/my-paint/杂图/00.jpeg"
 cover: "img/my-paint/杂图/00.jpeg"
 summary: "原本分散展示的灵感图，现在可以作为一个杂图系列统一收纳，避免首页被零碎更新打散。"
-home_style: "standard"
 home_badge: "灵感杂图"
 nsfw: true
 tags:

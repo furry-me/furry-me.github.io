@@ -6,7 +6,6 @@ author: "me"
 header-img: "img/my-paint/咪咪/3-meow.png"
 cover: "img/my-paint/咪咪/3-meow.png"
 summary: "从可爱立绘出发，逐步扩展出招财猫、贴贴、埃及摇和换装等一整组视频版本。"
-home_style: "tall"
 home_badge: "角色系列"
 tags:
   - SFW

@@ -4,7 +4,6 @@ subtitle: "偏角色写真的一组狼人立绘。"
 date: 2025-08-23 00:00:00
 author: "me"
 summary: "同一个狼人主题下的 4 张立绘和 1 段短视频，既能单看，也很适合像画册一样顺着浏览。"
-home_style: "wide"
 home_badge: "角色写真"
 tags:
   - 兽人

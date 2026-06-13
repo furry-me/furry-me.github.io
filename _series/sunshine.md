@@ -4,7 +4,6 @@ subtitle: "更接近日常写真组图的系列。"
 date: 2025-10-31 00:00:00
 author: "me"
 summary: "从一张主图延伸到一整组在阳光下展开的生活感画面，适合在系列页里连续滑看。"
-home_style: "standard"
 home_badge: "日常组图"
 tags:
   - SFW

@@ -6,7 +6,6 @@ author: "me"
 header-img: "img/my-paint/粉爪爪/head.png"
 cover: "img/my-paint/粉爪爪/head.png"
 summary: "从趴卧主图、修正版静帧，到另一组定格图和互动视频，完整展示了这个小猫角色的表情与动作变化。"
-home_style: "hero"
 home_badge: "封面系列"
 tags:
   - SFW

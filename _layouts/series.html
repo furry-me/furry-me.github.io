@@ -82,28 +82,19 @@ layout: default
 
         <!-- Full-width Masonry -->
         <div class="series-masonry" id="series-masonry">
-            <!-- Cover image first -->
-            {% if cover != blank %}
-                <a class="series-masonry-card series-masonry-card--hero" href="{{ cover_url }}" target="_blank" rel="noopener">
-                    <img src="{{ cover_url }}" alt="{{ page.title }}">
-                </a>
-            {% endif %}
-
             {% if page.media and page.media != empty %}
                 {% for item in page.media %}
                     {% if item.type == 'image' %}
-                        {% unless item.src == cover %}
-                            {% assign item_url = item.src | prepend: '/' | prepend: site.baseurl | replace: '//', '/' %}
-                            <a class="series-masonry-card" href="{{ item_url }}" target="_blank" rel="noopener">
-                                <img src="{{ item_url }}" alt="{{ item.title | default: page.title }}">
-                                {% if item.title or item.note %}
-                                    <div class="series-masonry-card__caption">
-                                        {% if item.title %}<strong>{{ item.title }}</strong>{% endif %}
-                                        {% if item.note %}<span>{{ item.note }}</span>{% endif %}
-                                    </div>
-                                {% endif %}
-                            </a>
-                        {% endunless %}
+                        {% assign item_url = item.src | prepend: '/' | prepend: site.baseurl | replace: '//', '/' %}
+                        <a class="series-masonry-card" href="{{ item_url }}" target="_blank" rel="noopener">
+                            <img src="{{ item_url }}" alt="{{ item.title | default: page.title }}">
+                            {% if item.title or item.note %}
+                                <div class="series-masonry-card__caption">
+                                    {% if item.title %}<strong>{{ item.title }}</strong>{% endif %}
+                                    {% if item.note %}<span>{{ item.note }}</span>{% endif %}
+                                </div>
+                            {% endif %}
+                        </a>
                     {% elsif item.type == 'video' %}
                         {% assign item_url = item.src | prepend: '/' | prepend: site.baseurl | replace: '//', '/' %}
                         <div class="series-masonry-card series-masonry-card--video">
@@ -136,11 +127,9 @@ layout: default
                     {% assign ext = file.extname | downcase %}
                     {% assign item_url = file.path | prepend: site.baseurl | replace: '//', '/' %}
                     {% if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.gif' or ext == '.avif' %}
-                        {% unless file.path == cover %}
-                            <a class="series-masonry-card" href="{{ item_url }}" target="_blank" rel="noopener">
-                                <img src="{{ item_url }}" alt="{{ page.title }}">
-                            </a>
-                        {% endunless %}
+                        <a class="series-masonry-card" href="{{ item_url }}" target="_blank" rel="noopener">
+                            <img src="{{ item_url }}" alt="{{ page.title }}">
+                        </a>
                     {% elsif ext == '.mp4' or ext == '.webm' or ext == '.mov' or ext == '.m4v' %}
                         <div class="series-masonry-card series-masonry-card--video">
                             <video controls preload="metadata" playsinline>
