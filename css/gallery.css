@@ -592,6 +592,19 @@
   font-size: 13px;
 }
 
+.series-info-bar__summary-text {
+  margin: 0;
+  color: var(--gallery-accent-deep);
+  font-size: 20px;
+  /* font-weight: 300; */
+  line-height: 1.5;
+}
+
+.series-info-bar__summary {
+  color: var(--gallery-accent-deep);
+  font-size: 13px;
+}
+
 /* Masonry container */
 .series-masonry {
   position: relative;

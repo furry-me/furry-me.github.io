@@ -58,9 +58,8 @@ layout: default
         <!-- Compact Info Bar -->
         <div class="series-info-bar">
             <div class="series-info-bar__left">
-                <h1 class="series-info-bar__title">{{ page.title }}</h1>
-                {% if page.subtitle %}
-                    <p class="series-info-bar__subtitle">{{ page.subtitle }}</p>
+                {% if page.summary %}
+                    <p class="series-info-bar__summary-text">{{ page.summary }}</p>
                 {% endif %}
             </div>
             <div class="series-info-bar__right">
