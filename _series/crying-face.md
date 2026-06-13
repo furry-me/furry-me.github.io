@@ -8,6 +8,7 @@ cover: "img/my-paint/哭哭脸/upscale.jpg"
 summary: "两张高分辨率近景肖像组成的小系列，重点在眼神、泪痕和情绪张力。"
 home_style: "standard"
 home_badge: "情绪肖像"
+nsfw: true
 tags:
   - 肖像
   - 情绪
