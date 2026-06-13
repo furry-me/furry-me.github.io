@@ -129,6 +129,8 @@ media:
 
 ## 5. 选择 Gallery 封面尺寸
 
+> 已弃用该页面
+
 `home_style` 控制 Gallery 展墙里的排布方式：
 
 - `hero`：最大，适合重点系列
