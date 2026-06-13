@@ -142,6 +142,7 @@
 .paper-snackbar {
   transition-property: opacity, bottom, left, right, width, margin, border-radius;
   transition-duration: 0.5s;
+  z-index: 10000;
   transition-timing-function: ease;
   /*font-family: RobotoDraft;*/
   font-size: 14px;

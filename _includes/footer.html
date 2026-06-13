@@ -30,6 +30,11 @@
 <!-- Custom Theme JavaScript -->
 <script src="{{ "/js/hux-blog.min.js " | prepend: site.baseurl }}"></script>
 
+<!-- Masonry Grid Helper -->
+{% if page.url == '/series/' or page.layout == 'series' %}
+<script src="{{ "/js/masonry.js" | prepend: site.baseurl }}"></script>
+{% endif %}
+
 <!-- Simple Jekyll Search -->
 <script src="{{ "/js/simple-jekyll-search.min.js" | prepend: site.baseurl }}"></script>
 

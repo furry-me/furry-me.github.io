@@ -1,5 +1,5 @@
 # Site settings
-title: paint
+title: Gallery
 SEOTitle: wsx的画廊 | WSX Gallary
 header-img: img/home-bg.jpg
 email: furry_me@outlook.com
@@ -43,6 +43,20 @@ anchorjs: true # if you want to customize anchor. check out line:181 of `post.ht
 # make sure you have this gem installed
 # `$ gem install jekyll-paginate`
 plugins: [jekyll-paginate]
+
+collections:
+  series:
+    output: true
+    permalink: /series/:slug/
+
+defaults:
+  - scope:
+      path: ""
+      type: series
+    values:
+      layout: series
+      header-mask: 0.45
+      no-catalog: true
 
 # Markdown settings
 # replace redcarpet to kramdown,

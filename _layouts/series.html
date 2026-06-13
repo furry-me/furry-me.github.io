@@ -1,0 +1,171 @@
+---
+layout: default
+---
+
+{% assign image_count = 0 %}
+{% assign video_count = 0 %}
+{% assign embed_count = 0 %}
+{% assign auto_media_dir = page.media_dir | prepend: '/' | append: '/' | replace: '//', '/' %}
+{% assign auto_media_files = site.static_files | where_exp: "file", "file.path contains auto_media_dir" | sort: 'path' %}
+{% assign manual_images = page.media | where: 'type', 'image' %}
+{% assign first_manual_image = manual_images | first %}
+{% capture auto_cover %}
+    {% if page.media_dir %}
+        {% for file in auto_media_files %}
+            {% assign ext = file.extname | downcase %}
+            {% if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.gif' or ext == '.avif' %}
+{{ file.path }}
+                {% break %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endcapture %}
+{% assign auto_cover = auto_cover | strip %}
+{% assign cover = page.cover | default: page.header-img | default: first_manual_image.src | default: auto_cover %}
+
+{% if page.media and page.media != empty %}
+    {% for item in page.media %}
+        {% if item.type == 'image' %}
+            {% assign image_count = image_count | plus: 1 %}
+        {% elsif item.type == 'video' %}
+            {% assign video_count = video_count | plus: 1 %}
+        {% elsif item.type == 'embed' %}
+            {% assign embed_count = embed_count | plus: 1 %}
+        {% endif %}
+    {% endfor %}
+{% elsif page.media_dir %}
+    {% for file in auto_media_files %}
+        {% assign ext = file.extname | downcase %}
+        {% if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.gif' or ext == '.avif' %}
+            {% assign image_count = image_count | plus: 1 %}
+        {% elsif ext == '.mp4' or ext == '.webm' or ext == '.mov' or ext == '.m4v' %}
+            {% assign video_count = video_count | plus: 1 %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if cover == blank %}
+    {% assign cover = site.header-img %}
+{% endif %}
+{% assign cover_url = cover | prepend: '/' | prepend: site.baseurl | replace: '//', '/' %}
+{% assign series_summary = page.summary | default: page.subtitle | default: "画廊系列" %}
+
+{% include intro-header.html type='post' header_image=cover tag_base='/series/' %}
+
+<article class="gallery-series-immersive">
+    <div class="container gallery-series__inner">
+
+        <!-- Compact Info Bar -->
+        <div class="series-info-bar">
+            <div class="series-info-bar__left">
+                <h1 class="series-info-bar__title">{{ page.title }}</h1>
+                {% if page.subtitle %}
+                    <p class="series-info-bar__subtitle">{{ page.subtitle }}</p>
+                {% endif %}
+            </div>
+            <div class="series-info-bar__right">
+                <div class="series-info-bar__meta">
+                    <span>{{ image_count }} 张图</span>
+                    <span>{{ video_count | plus: embed_count }} 段视频</span>
+                    <span>{{ page.date | date: "%Y.%m" }}</span>
+                </div>
+                <div class="gallery-pill-row">
+                    {% if page.nsfw %}
+                        <span class="gallery-chip">18+</span>
+                    {% endif %}
+                    {% for tag in page.tags %}
+                        <span class="gallery-chip">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Full-width Masonry -->
+        <div class="series-masonry" id="series-masonry">
+            <!-- Cover image first -->
+            {% if cover != blank %}
+                <a class="series-masonry-card series-masonry-card--hero" href="{{ cover_url }}" target="_blank" rel="noopener">
+                    <img src="{{ cover_url }}" alt="{{ page.title }}">
+                </a>
+            {% endif %}
+
+            {% if page.media and page.media != empty %}
+                {% for item in page.media %}
+                    {% if item.type == 'image' %}
+                        {% unless item.src == cover %}
+                            {% assign item_url = item.src | prepend: '/' | prepend: site.baseurl | replace: '//', '/' %}
+                            <a class="series-masonry-card" href="{{ item_url }}" target="_blank" rel="noopener">
+                                <img src="{{ item_url }}" alt="{{ item.title | default: page.title }}">
+                                {% if item.title or item.note %}
+                                    <div class="series-masonry-card__caption">
+                                        {% if item.title %}<strong>{{ item.title }}</strong>{% endif %}
+                                        {% if item.note %}<span>{{ item.note }}</span>{% endif %}
+                                    </div>
+                                {% endif %}
+                            </a>
+                        {% endunless %}
+                    {% elsif item.type == 'video' %}
+                        {% assign item_url = item.src | prepend: '/' | prepend: site.baseurl | replace: '//', '/' %}
+                        <div class="series-masonry-card series-masonry-card--video">
+                            <video controls preload="metadata" playsinline>
+                                <source src="{{ item_url }}">
+                            </video>
+                            {% if item.title or item.note %}
+                                <div class="series-masonry-card__caption">
+                                    {% if item.title %}<strong>{{ item.title }}</strong>{% endif %}
+                                    {% if item.note %}<span>{{ item.note }}</span>{% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% elsif item.type == 'embed' %}
+                        <div class="series-masonry-card series-masonry-card--embed">
+                            <div class="gallery-embed">
+                                <iframe src="{{ item.src }}" title="{{ item.title | default: page.title }}" loading="lazy" allowfullscreen></iframe>
+                            </div>
+                            {% if item.title or item.note %}
+                                <div class="series-masonry-card__caption">
+                                    {% if item.title %}<strong>{{ item.title }}</strong>{% endif %}
+                                    {% if item.note %}<span>{{ item.note }}</span>{% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% elsif page.media_dir %}
+                {% for file in auto_media_files %}
+                    {% assign ext = file.extname | downcase %}
+                    {% assign item_url = file.path | prepend: site.baseurl | replace: '//', '/' %}
+                    {% if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.gif' or ext == '.avif' %}
+                        {% unless file.path == cover %}
+                            <a class="series-masonry-card" href="{{ item_url }}" target="_blank" rel="noopener">
+                                <img src="{{ item_url }}" alt="{{ page.title }}">
+                            </a>
+                        {% endunless %}
+                    {% elsif ext == '.mp4' or ext == '.webm' or ext == '.mov' or ext == '.m4v' %}
+                        <div class="series-masonry-card series-masonry-card--video">
+                            <video controls preload="metadata" playsinline>
+                                <source src="{{ item_url }}">
+                            </video>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% if content != blank %}
+            <div class="series-prose">
+                {{ content }}
+            </div>
+        {% endif %}
+
+        <div class="series-actions">
+            <a class="btn btn-default" href="{{ '/series/' | prepend: site.baseurl | replace: '//', '/' }}">返回系列目录</a>
+        </div>
+    </div>
+</article>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    masonryLayout('#series-masonry', '.series-masonry-card');
+});
+</script>

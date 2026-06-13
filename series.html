@@ -1,0 +1,284 @@
+---
+title: Series
+layout: default
+permalink: /series/
+hide-in-nav: true
+nav_order: 2
+series_per_page: 20
+description: "「墨分五色 万象自生」"
+header-img: "img/bg-little-universe.jpg"
+header-mask: 0.35
+---
+
+{% assign ordered_series = site.series | sort: 'date' | reverse %}
+{% assign series_per_page = page.series_per_page | default: 20 %}
+{% capture raw_tags %}{% for entry in ordered_series %}{% for tag in entry.tags %}{{ tag | strip }}|||{% endfor %}{% endfor %}{% endcapture %}
+{% assign unique_tags = raw_tags | strip | split: '|||' | uniq | sort %}
+
+{% include intro-header.html type='page' short=true %}
+
+<main class="gallery-catalog">
+    <div class="container gallery-catalog__inner">
+        <section class="gallery-catalog__header">
+            <div class="gallery-filter-bar" id="series-filter-bar">
+                <button type="button" class="gallery-filter-pill is-active" id="sfw-toggle" title="切换安全浏览模式">
+                    <span class="gallery-sfw-toggle__icon">🔒</span>
+                    安全浏览
+                </button>
+                <button class="gallery-filter-pill is-active" data-gallery-filter="">
+                    全部
+                    <span>{{ ordered_series.size }}</span>
+                </button>
+                {% for tag in unique_tags %}
+                    {% assign clean_tag = tag | strip %}
+                    {% if clean_tag != "" %}
+                        {% assign tag_count = 0 %}
+                        {% for entry in ordered_series %}
+                            {% if entry.tags contains clean_tag %}
+                                {% assign tag_count = tag_count | plus: 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        <button class="gallery-filter-pill" data-gallery-filter="{{ clean_tag }}">
+                            {{ clean_tag }}
+                            <span>{{ tag_count }}</span>
+                        </button>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="gallery-catalog-grid" id="series-grid" data-series-per-page="{{ series_per_page }}">
+            {% for entry in ordered_series %}
+                {% assign entry_summary = entry.summary | default: entry.subtitle | default: "点击进入系列浏览完整媒体。" %}
+                {% assign manual_images = entry.media | where: 'type', 'image' %}
+                {% assign first_manual_image = manual_images | first %}
+                {% capture auto_cover %}
+                    {% if entry.media_dir %}
+                        {% assign entry_media_dir = entry.media_dir | prepend: '/' | append: '/' | replace: '//', '/' %}
+                        {% assign entry_media_files = site.static_files | where_exp: "file", "file.path contains entry_media_dir" | sort: 'path' %}
+                        {% for file in entry_media_files %}
+                            {% assign ext = file.extname | downcase %}
+                            {% if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.gif' or ext == '.avif' %}
+{{ file.path }}
+                                {% break %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endcapture %}
+                {% assign auto_cover = auto_cover | strip %}
+                {% assign cover = entry.cover | default: entry.header-img | default: first_manual_image.src | default: auto_cover %}
+
+                {% if cover == blank %}
+                    {% assign cover = site.header-img %}
+                {% endif %}
+                {% assign cover_url = cover | prepend: '/' | prepend: site.baseurl | replace: '//', '/' %}
+                <a class="gallery-catalog-card{% if entry.nsfw %} is-nsfw{% endif %}" href="{{ entry.url | prepend: site.baseurl | replace: '//', '/' }}" data-gallery-tags="{{ entry.tags | join: '|' }}" data-nsfw="{{ entry.nsfw }}">
+                    <div class="gallery-catalog-card__media">
+                        <img src="{{ cover_url }}" alt="{{ entry.title }}">
+                    </div>
+                    <div class="gallery-catalog-card__body">
+                        <div class="gallery-catalog-card__topline">
+                            <span>{{ entry.home_badge | default: '画廊系列' }}</span>
+                            <span>{{ entry.date | date: "%Y.%m.%d" }}</span>
+                        </div>
+                        <h3>{{ entry.title }}</h3>
+                        {% if entry.subtitle %}
+                            <p class="gallery-catalog-card__subtitle">{{ entry.subtitle }}</p>
+                        {% endif %}
+                        <p class="gallery-catalog-card__summary">{{ entry_summary | truncate: 100 }}</p>
+                        <div class="gallery-pill-row">
+                            {% for tag in entry.tags limit: 4 %}
+                                <span class="gallery-chip">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </section>
+
+        <nav class="gallery-pagination is-hidden" id="series-pagination" aria-label="Series pagination"></nav>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var seenTags = {};
+        Array.prototype.slice.call(document.querySelectorAll('[data-gallery-filter]')).forEach(function (button) {
+            var rawTag = button.getAttribute('data-gallery-filter');
+            if (rawTag === null) return;
+            var cleanTag = rawTag.trim();
+            button.setAttribute('data-gallery-filter', cleanTag);
+
+            if (!cleanTag) return;
+            if (seenTags[cleanTag]) {
+                button.remove();
+                return;
+            }
+            seenTags[cleanTag] = true;
+        });
+
+        var buttons = document.querySelectorAll('[data-gallery-filter]');
+        var cards = Array.prototype.slice.call(document.querySelectorAll('[data-gallery-tags]'));
+        var pagination = document.getElementById('series-pagination');
+        var grid = document.getElementById('series-grid');
+        var params = new URLSearchParams(window.location.search);
+        var initialTag = decodeURIComponent(params.get('tag') || '').trim();
+        var initialPage = parseInt(params.get('page') || '1', 10);
+        var perPage = parseInt((grid && grid.getAttribute('data-series-per-page')) || '20', 10);
+        var currentTag = initialTag;
+        var currentPage = !isNaN(initialPage) && initialPage > 0 ? initialPage : 1;
+
+        if (!perPage || perPage < 1) {
+            perPage = 20;
+        }
+
+        function buildPageButton(label, targetPage, disabled, active) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'gallery-pagination__item';
+            button.textContent = label;
+            button.disabled = !!disabled;
+
+            if (active) {
+                button.classList.add('is-active');
+                button.setAttribute('aria-current', 'page');
+            }
+
+            if (!disabled && !active) {
+                button.setAttribute('data-series-page', String(targetPage));
+            }
+
+            return button;
+        }
+
+        function updateHistory(tag, page) {
+            var nextParams = new URLSearchParams();
+
+            if (tag) {
+                nextParams.set('tag', tag);
+            }
+
+            if (page > 1) {
+                nextParams.set('page', String(page));
+            }
+
+            var nextUrl = window.location.pathname;
+            var query = nextParams.toString();
+            if (query) {
+                nextUrl += '?' + query;
+            }
+
+            window.history.replaceState(null, '', nextUrl);
+        }
+
+        function renderPagination(totalPages, page) {
+            if (!pagination) {
+                return;
+            }
+
+            pagination.innerHTML = '';
+
+            if (totalPages <= 1) {
+                pagination.classList.add('is-hidden');
+                return;
+            }
+
+            pagination.classList.remove('is-hidden');
+            pagination.appendChild(buildPageButton('上一页', page - 1, page <= 1, false));
+
+            for (var index = 1; index <= totalPages; index += 1) {
+                pagination.appendChild(buildPageButton(String(index), index, false, index === page));
+            }
+
+            pagination.appendChild(buildPageButton('下一页', page + 1, page >= totalPages, false));
+        }
+
+        function applyFilter(tag, requestedPage) {
+            tag = (tag || '').trim();
+
+            var matchedCards = cards.filter(function (card) {
+                var tags = card.getAttribute('data-gallery-tags') || '';
+                return !tag || tags.split('|').indexOf(tag) >= 0;
+            });
+            var totalPages = Math.max(1, Math.ceil(matchedCards.length / perPage));
+            var page = Math.min(Math.max(requestedPage || 1, 1), totalPages);
+            var start = (page - 1) * perPage;
+            var end = start + perPage;
+
+            cards.forEach(function (card) {
+                card.classList.add('is-hidden');
+            });
+
+            matchedCards.forEach(function (card, index) {
+                var shouldShow = index >= start && index < end;
+                card.classList.toggle('is-hidden', !shouldShow);
+            });
+
+            buttons.forEach(function (button) {
+                button.classList.toggle('is-active', button.getAttribute('data-gallery-filter') === tag);
+            });
+
+            currentTag = tag;
+            currentPage = page;
+            renderPagination(totalPages, page);
+            updateHistory(tag, page);
+
+            /* Layout masonry after visibility changes */
+            requestAnimationFrame(function () {
+                doLayout();
+            });
+        }
+
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                applyFilter((button.getAttribute('data-gallery-filter') || '').trim(), 1);
+            });
+        });
+
+        if (pagination) {
+            pagination.addEventListener('click', function (event) {
+                var trigger = event.target.closest('[data-series-page]');
+
+                if (!trigger) {
+                    return;
+                }
+
+                var targetPage = parseInt(trigger.getAttribute('data-series-page') || '1', 10);
+                applyFilter(currentTag, targetPage);
+            });
+        }
+
+        applyFilter(initialTag, currentPage);
+
+        /* Shared masonry layout — filters out hidden cards for pagination/tags */
+        var doLayout = masonryLayout('#series-grid', '.gallery-catalog-card', {
+            filter: function(c) { return !c.classList.contains('is-hidden'); }
+        });
+
+        /* SFW Toggle */
+        var sfwToggle = document.getElementById('sfw-toggle');
+        if (sfwToggle) {
+            var stored = sessionStorage.getItem('gallery-sfw');
+            var sfwOn = stored !== null ? stored === 'true' : true;
+
+            function applySFW(on) {
+                document.querySelectorAll('.is-nsfw').forEach(function (card) {
+                    card.classList.toggle('is-blurred', !!on);
+                });
+                sfwToggle.classList.toggle('is-active', !!on);
+                var icon = sfwToggle.querySelector('.gallery-sfw-toggle__icon');
+                if (icon) icon.textContent = on ? '🔒' : '🔓';
+                var label = sfwToggle.childNodes[2];
+                if (label && label.nodeType === 3) label.textContent = on ? ' 安全浏览' : ' 自由浏览';
+                sessionStorage.setItem('gallery-sfw', String(on));
+            }
+
+            sfwToggle.addEventListener('click', function () {
+                sfwOn = !sfwOn;
+                applySFW(sfwOn);
+            });
+
+            applySFW(sfwOn);
+        }
+    });
+</script>
