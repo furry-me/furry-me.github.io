@@ -68,8 +68,6 @@ author: "me"
 header-img: "img/my-paint/新系列名/cover.jpg"
 cover: "img/my-paint/新系列名/cover.jpg"
 summary: "Gallery 页面和系列目录会读取这段简介。"
-home_style: "wide"
-home_badge: "角色系列"
 tags:
   - SFW
   - 角色
